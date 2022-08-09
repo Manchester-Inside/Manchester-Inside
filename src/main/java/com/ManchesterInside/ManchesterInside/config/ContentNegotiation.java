@@ -1,4 +1,4 @@
-package manchesterinside.config;
+package com.ManchesterInside.ManchesterInside.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

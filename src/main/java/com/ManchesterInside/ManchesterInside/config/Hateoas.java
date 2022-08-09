@@ -1,4 +1,4 @@
-package manchesterinside.config;
+package com.ManchesterInside.ManchesterInside.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

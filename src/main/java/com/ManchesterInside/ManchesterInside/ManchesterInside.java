@@ -1,4 +1,4 @@
-package manchesterinside;
+package com.ManchesterInside.ManchesterInside;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

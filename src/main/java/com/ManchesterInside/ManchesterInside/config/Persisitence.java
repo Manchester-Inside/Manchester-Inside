@@ -1,4 +1,4 @@
-package manchesterinside.config;
+package com.ManchesterInside.ManchesterInside.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
