@@ -1,6 +1,7 @@
 package com.ManchesterInside.ManchesterInside.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -40,6 +42,9 @@ public class Post {
 	private int upvotes;
 	
 	private int downvotes;
+	
+	@OneToMany
+	private List<PostComment> postComments;
 
 	public long getId() {
 		return id;
