@@ -26,7 +26,7 @@ public class Persistence {
 	private final static Logger log = LoggerFactory.getLogger(Persistence.class);
 
 	// Persistence objects.
-	private final static String PACKAGES = "manchesterinside.entities";
+	private final static String PACKAGES = "com.ManchesterInside.ManchesterInside.entities";
 
 	// Connection properties.
 	private final static Path DB_PATH = Paths.get(System.getProperty("user.dir"), "db", "manchester-inside-dev");

@@ -1,6 +1,10 @@
 package com.ManchesterInside.ManchesterInside.apiControllers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -35,6 +39,11 @@ public class UsersControllerApi {
 		User user = userService.findById(id).orElseThrow();
 		
 		return userAssembler.toModel(user);
+	}
+	
+	@GetMapping
+	public CollectionModel<User> getAllUsers(){
+		return CollectionModel.of(userService.findAll(), linkTo(methodOn(UsersControllerApi.class).getAllUsers()).withSelfRel());
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

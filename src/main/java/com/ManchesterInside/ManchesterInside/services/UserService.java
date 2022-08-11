@@ -6,13 +6,13 @@ import com.ManchesterInside.ManchesterInside.entities.User;
 
 public interface UserService {
 	
-//	public long count();
+	public long count();
 	
-//	public Iterable<User> findAll();
+	public Iterable<User> findAll();
 	
 	public Optional<User> findById(long id);
 	
 	public User save(User user);
 	
-//	public void updateUser(User user, long id);
+	public void updateUser(User user, long id);
 }

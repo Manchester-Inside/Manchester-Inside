@@ -14,15 +14,15 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-//	@Override
-//	public long count() {
-//		return userRepository.count();
-//	}
+	@Override
+	public long count() {
+		return userRepository.count();
+	}
 
-//	@Override
-//	public Iterable<User> findAll() {
-//		return userRepository.findAll();
-//	}
+	@Override
+	public Iterable<User> findAll() {
+		return userRepository.findAll();
+	}
 
 	@Override
 	public Optional<User> findById(long id) {
@@ -34,16 +34,16 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
-//	@Override
-//	public void updateUser(User user, long id) {
-//		User userInDB = userRepository.findById(id).get();
-//		userInDB.setFirstName(user.getFirstName());
-//		userInDB.setLastName(user.getLastName());
-//		userInDB.setUserName(user.getUserName());
-//		userInDB.setPassword(user.getPassword());
-//		userInDB.setEmail(user.getEmail());
-//		userInDB.setPosts(user.getPosts());
-//		userRepository.save(user);
-//	}
+	@Override
+	public void updateUser(User user, long id) {
+		User userInDB = userRepository.findById(id).get();
+		userInDB.setFirstName(user.getFirstName());
+		userInDB.setLastName(user.getLastName());
+		userInDB.setUserName(user.getUserName());
+		userInDB.setPassword(user.getPassword());
+		userInDB.setEmail(user.getEmail());
+		userInDB.setPosts(user.getPosts());
+		userRepository.save(user);
+	}
 
 }
