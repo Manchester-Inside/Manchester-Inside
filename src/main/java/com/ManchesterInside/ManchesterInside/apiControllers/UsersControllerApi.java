@@ -3,6 +3,8 @@ package com.ManchesterInside.ManchesterInside.apiControllers;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 import com.ManchesterInside.ManchesterInside.assemblers.UserModelAssembler;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.services.UserService;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,8 +45,12 @@ public class UsersControllerApi {
 	}
 	
 	@GetMapping
-	public CollectionModel<User> getAllUsers(){
-		return CollectionModel.of(userService.findAll(), linkTo(methodOn(UsersControllerApi.class).getAllUsers()).withSelfRel());
+	public CollectionModel<EntityModel<User>> getAllUsers(){
+//		return CollectionModel.of(userService.findAll(), linkTo(methodOn(UsersControllerApi.class).getAllUsers()).withSelfRel());
+		ArrayList<User> allUsers = new ArrayList<User>();
+		userService.findAll().forEach(allUsers::add);
+		return userAssembler.toCollectionModel(allUsers)
+		 .add(linkTo(methodOn(UsersControllerApi.class).getAllUsers()).withSelfRel());
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
