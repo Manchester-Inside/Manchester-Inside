@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PostComment {
 	
 	@Id
-	@Column(name = "post_commend_id")
+	@Column(name = "post_comment_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
