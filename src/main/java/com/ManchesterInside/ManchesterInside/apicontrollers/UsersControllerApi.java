@@ -38,7 +38,7 @@ public class UsersControllerApi {
 	private UserModelAssembler userAssembler;
 	
 	@GetMapping("/{id}")
-	public EntityModel<User> getUser(@PathVariable("id") long id){
+	public EntityModel<User> getUserById(@PathVariable("id") long id){
 		User user = userService.findById(id).orElseThrow();
 		
 		return userAssembler.toModel(user);
@@ -46,7 +46,6 @@ public class UsersControllerApi {
 	
 	@GetMapping
 	public CollectionModel<EntityModel<User>> getAllUsers(){
-//		return CollectionModel.of(userService.findAll(), linkTo(methodOn(UsersControllerApi.class).getAllUsers()).withSelfRel());
 		ArrayList<User> allUsers = new ArrayList<User>();
 		userService.findAll().forEach(allUsers::add);
 		return userAssembler.toCollectionModel(allUsers)

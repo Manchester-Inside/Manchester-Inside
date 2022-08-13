@@ -2,6 +2,7 @@ package com.ManchesterInside.ManchesterInside.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PostComment {
 	
 	@Id
+	@Column(name = "post_comment_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
