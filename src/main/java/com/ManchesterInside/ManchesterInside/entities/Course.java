@@ -8,7 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="courses")
@@ -20,11 +23,13 @@ public class Course {
 	
 	private String courseName;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime time;
 	
+	@NotEmpty
 	private String description;
 	
-	private Float ratings;
+	private Float ratings = 0.0f;
 	
 	@NotNull
 	@ManyToOne
