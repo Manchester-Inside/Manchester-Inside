@@ -6,7 +6,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import com.ManchesterInside.ManchesterInside.apiControllers.UsersControllerApi;
+import com.ManchesterInside.ManchesterInside.apicontrollers.UsersControllerApi;
 import com.ManchesterInside.ManchesterInside.entities.User;
 
 @Component
