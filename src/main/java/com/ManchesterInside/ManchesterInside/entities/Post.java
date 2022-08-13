@@ -2,7 +2,6 @@ package com.ManchesterInside.ManchesterInside.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.FetchType;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="posts")
@@ -25,23 +23,24 @@ public class Post {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Category category;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private User user;
-	
-	// Still have to define the format
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime timeUploaded;
-	
-	// Still have to define the format
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime lastEdited;
 	
+	@NotEmpty
 	private String content;
 	
-	private int upvotes;
+	private int upvotes = 0;
 	
-	private int downvotes;
+	private int downvotes = 0;
 	
 	@OneToMany
 	private List<PostComment> postComments;

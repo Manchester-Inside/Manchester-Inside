@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -42,10 +42,15 @@ public class Security extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/**").csrf().ignoringAntMatchers("/api/**");
 	}
 
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder(10);
+	}
+
 	@Override
 	@Bean
 	public UserDetailsService userDetailsService() {
-		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		PasswordEncoder encoder = passwordEncoder();
 
 		UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles(ADMIN_ROLE).build();
 

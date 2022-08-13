@@ -8,7 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="course_comments")
@@ -18,18 +22,19 @@ public class CourseComment {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	// Still have to define the format
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime timeUploaded;
 	
-	// Still have to define the format
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime lastEdited;
 	
+	@NotEmpty
 	private String comment;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Course course;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	private User user;
 
 	public long getId() {
