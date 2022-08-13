@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <title layout:title-pattern="$LAYOUT_TITLE: $CONTENT_TITLE">EventLite</title>
+  <title layout:title-pattern="$LAYOUT_TITLE: $CONTENT_TITLE">Greetings</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,51 +11,42 @@
   <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css" />
 </head>
 <body>
-     <nav class="navbar navbar-expand-md py-3 navbar-light" style="background-color: #e3f2fd;">
-      <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">MancheseterInside</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#hello-navbar-collapse" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
       
-        <a href="/" class="navbar-brand">
-          <h1 class="text-dark">EventLite</h1>
+    <div class="collapse navbar-collapse" id="hello-navbar-collapse">
+    	<div class="navbar-nav mr-auto"></div>
+      <div class="navbar-text" sec:authorize="!isAuthenticated()">
+      	<i class="fas fa-user" aria-hidden="true"></i> Not signed in |
+      	<a class="btn btn-primary navbar-btn" role="button" th:href="@{/sign-in}">
+          <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Sign in
         </a>
-        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent3" aria-controls="navbarSupportedContent3" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div sec:authorize="!isAuthenticated()">
-      <i class="fas fa-user-slash" aria-hidden="true"></i> Not signed in
-      <a class="btn btn-primary" role="button" th:href="@{/sign-in}">
-        <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Sign in
-      </a>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-      <form th:action="@{/sign-out}" method="post">
-        <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span>
-        <button type="submit" class="btn btn-warning"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+      </div>
+      <form class="form-inline" th:action="@{/sign-out}" method="post" sec:authorize="isAuthenticated()">
+        <div class="navbar-text">
+          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |
+        </div>&nbsp;
+        <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
       </form>
     </div>
-        <div id="navbarSupportedContent3" class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="/events" class="nav-link text-dark">All Events</a>
-            </li>
-            <li class="nav-item">
-              <a href="/venues" class="nav-link text-dark">All Venues</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  <div class="container">
-    
-    
+  </nav>
+
+  <div class="container mt-lg-5">
+    <div class="alert alert-success alert-dismissible" role="alert" th:if="${ok_message}">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+
+      <span th:text="${ok_message}">Success!</span>
+    </div>
 
     <div layout:fragment="content">
       Main page body goes here...
     </div>
   </div>
-  
-  
-  
-  
 
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
