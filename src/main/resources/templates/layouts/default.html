@@ -28,9 +28,10 @@
       </div>
       <form class="form-inline" th:action="@{/sign-out}" method="post" sec:authorize="isAuthenticated()">
         <div class="navbar-text">
-          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |
-        </div>&nbsp;
-        <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |&nbsp;&nbsp;
+          <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+        </div>
+        
       </form>
     </div>
     </div>
