@@ -12,13 +12,14 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  	<div class="container-fluid">
     <a class="navbar-brand" th:href="@{/}">MancheseterInside</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#hello-navbar-collapse" aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
     </button>
       
     <div class="collapse navbar-collapse" id="hello-navbar-collapse">
-    	<div class="navbar-nav mr-auto"></div>
+    	<div class="navbar-nav me-auto"></div>
       <div class="navbar-text" sec:authorize="!isAuthenticated()">
       	<i class="fas fa-user" aria-hidden="true"></i> Not signed in |
       	<a class="btn btn-primary navbar-btn" role="button" th:href="@{/sign-in}">
@@ -27,10 +28,12 @@
       </div>
       <form class="form-inline" th:action="@{/sign-out}" method="post" sec:authorize="isAuthenticated()">
         <div class="navbar-text">
-          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |
-        </div>&nbsp;
-        <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |&nbsp;&nbsp;
+          <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+        </div>
+        
       </form>
+    </div>
     </div>
   </nav>
 
