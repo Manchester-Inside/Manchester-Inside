@@ -7,5 +7,6 @@ import com.ManchesterInside.ManchesterInside.entities.Post;
 public interface PostRepository extends CrudRepository<Post, Long> {
 	// orders post by descending order of uploaded date
 	// Spring magic!
-	Iterable<Post> findAllbyOrderByTimeUploadedDesc();
+	// enable later
+	// Iterable<Post> findAllbyOrderByTimeUploadedDesc();
 }

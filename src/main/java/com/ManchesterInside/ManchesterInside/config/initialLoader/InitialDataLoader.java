@@ -51,13 +51,22 @@ public class InitialDataLoader {
 			if(postService.count() > 0) {
 				log.info("Database is already populated with posts.");
 			}else {
-				Post post = new Post();
+				Post post1 = new Post();
 				// TODO: set category of post
 				// post.setCategory();
-				post.setContent("Test Content");
-				post.setLastEdited(LocalDateTime.now());
-				post.setTimeUploaded(LocalDateTime.now());
-				post.setUser(userService.findById(0).orElse(null));
+				post1.setTitle("Test Post Title");
+				post1.setContent("Test Content");
+				post1.setLastEdited(LocalDateTime.now());
+				post1.setTimeUploaded(LocalDateTime.now());
+				post1.setUser(userService.findById(1).orElse(null));
+				postService.save(post1);
+				Post post2 = new Post();
+				post2.setTitle("Test Post Title 222");
+				post2.setContent("Test Content 222");
+				post2.setLastEdited(LocalDateTime.now().plusDays(2));
+				post2.setTimeUploaded(LocalDateTime.now().plusDays(1));
+				post2.setUser(userService.findById(1).orElse(null));
+				postService.save(post2);
 			}
 			
 		};
