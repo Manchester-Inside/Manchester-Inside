@@ -38,6 +38,9 @@ public class Post {
 	private LocalDateTime lastEdited;
 	
 	@NotEmpty
+	private String title;
+	
+	@NotEmpty
 	private String content;
 	
 	private int upvotes = 0;
@@ -93,6 +96,14 @@ public class Post {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getUpvotes() {
