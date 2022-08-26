@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.ManchesterInside.ManchesterInside.entities.Role;
 import com.ManchesterInside.ManchesterInside.entities.User;
 
-public class MIUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
 	/**
 	 * 
@@ -20,8 +20,12 @@ public class MIUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private User user;
 	
-	public MIUserDetails(User user) {
+	public CustomUserDetails(User user) {
 		this.user = user;
+	}
+	
+	public User getUser() {
+		return this.user;
 	}
 	
 	@Override

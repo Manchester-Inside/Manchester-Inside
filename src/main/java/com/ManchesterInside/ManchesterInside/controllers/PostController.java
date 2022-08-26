@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetails;
 import com.ManchesterInside.ManchesterInside.entities.Post;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.exceptions.PostNotFoundException;
@@ -88,7 +89,15 @@ public class PostController {
 			return "/posts/new";
 		}
 		// set author info and time info here
-		post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = null;
+		if (principal instanceof CustomUserDetails) {
+			user = ((CustomUserDetails)principal).getUser();
+		} 
+		//TODO: Handle if there is no user logged in.
+
+		post.setUser(user);
 		post.setTimeUploaded(LocalDateTime.now());
 		post.setLastEdited(LocalDateTime.now());
 		
@@ -97,9 +106,5 @@ public class PostController {
 		redirectAttrs.addFlashAttribute("ok_message", "New post added.");
 
 		return "redirect:/posts";
-	}
-	
-	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-	
+	}	
 }
