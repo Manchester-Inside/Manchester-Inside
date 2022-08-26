@@ -2,6 +2,7 @@ package com.ManchesterInside.ManchesterInside.entities;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotEmpty;
 public class Category {
 
 	@Id
+	@Column(name = "category_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	

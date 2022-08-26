@@ -2,6 +2,8 @@ package com.ManchesterInside.ManchesterInside.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,11 +16,37 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import com.ManchesterInside.ManchesterInside.config.userdetails.UserDetailsServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 public class Security extends WebSecurityConfigurerAdapter {
+	
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(10);
+	}
+	
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService());
+		authProvider.setPasswordEncoder(passwordEncoder());
+		
+		return authProvider;
+	}
+	
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
 
-	public static final String ADMIN_ROLE = "ADMINISTRATOR";
+//	public static final String ADMIN_ROLE = "ADMINISTRATOR";
 
 	// List the mappings/methods for which no authorisation is required.
 	private static final RequestMatcher[] NO_AUTH = { new AntPathRequestMatcher("/webjars/**", "GET"),
@@ -29,7 +57,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// By default, all requests are authenticated except our specific list.
-		http.authorizeRequests().requestMatchers(NO_AUTH).permitAll().anyRequest().hasRole(ADMIN_ROLE);
+		http.authorizeRequests().requestMatchers(NO_AUTH).permitAll().anyRequest().hasRole("ADMIN");
 
 		// Use form login/logout for the Web.
 		http.formLogin().loginPage("/sign-in").permitAll();
@@ -42,18 +70,13 @@ public class Security extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/**").csrf().ignoringAntMatchers("/api/**");
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder(10);
-	}
-
-	@Override
-	@Bean
-	public UserDetailsService userDetailsService() {
-		PasswordEncoder encoder = passwordEncoder();
-
-		UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles(ADMIN_ROLE).build();
-
-		return new InMemoryUserDetailsManager(admin);
-	}
+//	@Override
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		PasswordEncoder encoder = passwordEncoder();
+//
+//		UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles(ADMIN_ROLE).build();
+//
+//		return new InMemoryUserDetailsManager(admin);
+//	}
 }
