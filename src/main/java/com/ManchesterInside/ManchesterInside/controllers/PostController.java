@@ -1,4 +1,4 @@
-package com.ManchesterInside.ManchesterInside.apicontrollers;
+package com.ManchesterInside.ManchesterInside.controllers;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetails;
 import com.ManchesterInside.ManchesterInside.entities.Post;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.exceptions.PostNotFoundException;
@@ -37,7 +38,7 @@ public class PostController {
 	//TODO: Add not_found error
 	@ExceptionHandler(PostNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String eventNotFoundHandler(PostNotFoundException ex, Model model) {
+	public String postNotFoundHandler(PostNotFoundException ex, Model model) {
 		model.addAttribute("not_found_id", ex.getId());
 
 		return "posts/not_found";
@@ -45,7 +46,7 @@ public class PostController {
 	
 	/* returns all posts as a list, under attribute "posts" of model */
 	@GetMapping
-	public String list(Model model) {
+	public String getPosts(Model model) {
 
 		model.addAttribute("posts", postService.findAll());
 
@@ -54,7 +55,7 @@ public class PostController {
 	
 	/* returns post with given postID, under attribute post. */
 	@GetMapping("/{id}")
-	public String greeting(@PathVariable("id") long id,
+	public String getPost(@PathVariable("id") long id,
 			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
 
 		Post post = postService.findById(id).orElseThrow(() -> new PostNotFoundException(id));
@@ -80,7 +81,7 @@ public class PostController {
 	
 	// ADD NEW POST VIA FORM
 	@PostMapping(value = "/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String createEvent(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
+	public String createPost(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
 			Model model, RedirectAttributes redirectAttrs) {
 
 		if (errors.hasErrors()) {
@@ -88,7 +89,15 @@ public class PostController {
 			return "/posts/new";
 		}
 		// set author info and time info here
-		post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = null;
+		if (principal instanceof CustomUserDetails) {
+			user = ((CustomUserDetails)principal).getUser();
+		} 
+		//TODO: Handle if there is no user logged in.
+
+		post.setUser(user);
 		post.setTimeUploaded(LocalDateTime.now());
 		post.setLastEdited(LocalDateTime.now());
 		
@@ -97,9 +106,5 @@ public class PostController {
 		redirectAttrs.addFlashAttribute("ok_message", "New post added.");
 
 		return "redirect:/posts";
-	}
-	
-	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-	
+	}	
 }

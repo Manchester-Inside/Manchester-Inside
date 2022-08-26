@@ -12,6 +12,8 @@ public interface UserService {
 	
 	public Optional<User> findById(long id);
 	
+	public Optional<User> findByName(String userName);
+	
 	public User save(User user);
 	
 	public void updateUser(User user, long id);

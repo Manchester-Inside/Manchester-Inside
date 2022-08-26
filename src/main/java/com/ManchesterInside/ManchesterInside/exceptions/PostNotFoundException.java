@@ -7,7 +7,7 @@ public class PostNotFoundException extends RuntimeException{
 	private long id;
 
 	public PostNotFoundException(long id) {
-		super("Could not find greeting " + id);
+		super("Could not find post " + id);
 
 		this.id = id;
 	}

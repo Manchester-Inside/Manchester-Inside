@@ -65,7 +65,19 @@ public class InitialDataLoader {
 				user.setPassword(this.passwordEncoder.encode("i-am-a-professor"));
 				user.setEmail("sample@email.com");
 				user.setEnabled(true);
+				
+				User user2 = new User();
+				user2.getRoles().add(r2);
+				user2.setFirstName("william");
+				user2.setLastName("aung");
+				user2.setUserName("aaa");
+				user2.setPassword(this.passwordEncoder.encode("aaa"));
+				user2.setEmail("w.a@gmail.com");
+				user2.setEnabled(true);
+				
+				
 				userService.save(user);
+				userService.save(user2);
 			}
 			// populate db with categories
 			// TODO: Implement categories and initialize here

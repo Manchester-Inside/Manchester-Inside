@@ -52,7 +52,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 	private static final RequestMatcher[] NO_AUTH = { new AntPathRequestMatcher("/webjars/**", "GET"),
 			new AntPathRequestMatcher("/api/**", "GET"),
 			new AntPathRequestMatcher("/", "GET"), new AntPathRequestMatcher("/api/users", "GET"),
-			new AntPathRequestMatcher("/", "GET")};
+			new AntPathRequestMatcher("/**", "GET"),
+			new AntPathRequestMatcher("/**", "POST")};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -70,13 +71,4 @@ public class Security extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/**").csrf().ignoringAntMatchers("/api/**");
 	}
 
-//	@Override
-//	@Bean
-//	public UserDetailsService userDetailsService() {
-//		PasswordEncoder encoder = passwordEncoder();
-//
-//		UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles(ADMIN_ROLE).build();
-//
-//		return new InMemoryUserDetailsManager(admin);
-//	}
 }
