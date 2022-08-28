@@ -1,58 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-  <title layout:title-pattern="$LAYOUT_TITLE: $CONTENT_TITLE">Greetings</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css" />
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  	<div class="container-fluid">
-    <a class="navbar-brand" th:href="@{/}">MancheseterInside</a>
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#hello-navbar-collapse" aria-expanded="false">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-      
-    <div class="collapse navbar-collapse" id="hello-navbar-collapse">
-    	<div class="navbar-nav me-auto"></div>
-      <div class="navbar-text" sec:authorize="!isAuthenticated()">
-      	<i class="fas fa-user" aria-hidden="true"></i> Not signed in |
-      	<a class="btn btn-primary navbar-btn" role="button" th:href="@{/sign-in}">
-          <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Sign in
-        </a>
-      </div>
-      <form class="form-inline" th:action="@{/sign-out}" method="post" sec:authorize="isAuthenticated()">
-        <div class="navbar-text">
-          <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |&nbsp;&nbsp;
-          <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+    <html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title layout:title-pattern="$LAYOUT_TITLE: $CONTENT_TITLE">Greetings</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg py-3 nbg-light" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">
+                    <h1 class="text-dark">Manchester Inside</h1>
+                </a>
+                <button type="button" data-toggle="collapse" data-bs-target="#navbarSupportedContent3" aria-controls="navbarSupportedContent3" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse">
+                    
+                    <ul class="navbar-nav me-auto justify-content-center">
+                        <li class="nav-tiem">
+                            <a class="nav-link text-dark" th:href="@{/posts}">Posts</a>
+                        </li>
+                        <li class="nav-tiem">
+                            <a class="nav-link text-dark" th:href="@{/reviews}">Reviews</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="nav-item" sec:authorize="!isAuthenticated()">
+                        <i class="fas fa-user" aria-hidden="true"></i> Not signed in |
+                            <a class="btn btn-primary navbar-btn" role="button" th:href="@{/sign-in}">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Sign in
+                            </a>
+                    </div>
+
+                
+                    <form class="form-inline" th:action="@{/sign-out}" method="post" sec:authorize="isAuthenticated()">
+                        <div class="navbar-text">
+                            <i class="fas fa-user" aria-hidden="true"></i> Signed in as <span sec:authentication="name"></span> |&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-warning navbar-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</button>
+                        </div> 
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-lg-5">
+            <div class="alert alert-success alert-dismissible" role="alert" th:if="${ok_message}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+                <span th:text="${ok_message}">Success!</span>
+            </div>
+
+            <div layout:fragment="content">
+                Main page body goes here...
+            </div>
         </div>
-        
-      </form>
-    </div>
-    </div>
-  </nav>
 
-  <div class="container mt-lg-5">
-    <div class="alert alert-success alert-dismissible" role="alert" th:if="${ok_message}">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <i class="fas fa-times" aria-hidden="true"></i>
-      </button>
-
-      <span th:text="${ok_message}">Success!</span>
-    </div>
-
-    <div layout:fragment="content">
-      Main page body goes here...
-    </div>
-  </div>
-
-  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
-  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-</body>
+        <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
+        <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    </body>
 </html>
