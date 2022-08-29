@@ -121,4 +121,12 @@ public class Post {
 	public void setDownvotes(int downvotes) {
 		this.downvotes = downvotes;
 	}
+	
+	public List<PostComment> getPostComments(){
+		return postComments;
+	}
+	
+	public void setPostComments(List<PostComment> postComments) {
+		this.postComments = postComments;
+	}
 }

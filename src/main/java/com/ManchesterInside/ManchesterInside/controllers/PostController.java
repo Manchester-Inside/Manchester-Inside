@@ -61,8 +61,8 @@ public class PostController {
 		Post post = postService.findById(id).orElseThrow(() -> new PostNotFoundException(id));
 
 		model.addAttribute("post", post);
-
-		return "posts/viewpost";
+		
+		return "posts/view";
 	}
 	
 	//TODO: Add /new, /update and /delete accordingly
@@ -79,7 +79,7 @@ public class PostController {
 		
 	}
 	
-	// ADD NEW POST VIA FORM
+	/* add new post via contents of form (form should pass Post object) */
 	@PostMapping(value = "/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String createPost(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
 			Model model, RedirectAttributes redirectAttrs) {
