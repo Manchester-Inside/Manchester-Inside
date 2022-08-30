@@ -31,8 +31,6 @@ public class Course {
 	@NotEmpty
 	private String description;
 	
-	private Float ratings = 0.0f;
-	
 	@NotNull
 	@ManyToOne
 	private School school;
@@ -67,14 +65,6 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Float getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Float ratings) {
-		this.ratings = ratings;
 	}
 
 	public School getSchool() {

@@ -15,11 +15,18 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ManchesterInside.ManchesterInside.entities.Role;
+import com.ManchesterInside.ManchesterInside.entities.School;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.services.RoleService;
 import com.ManchesterInside.ManchesterInside.services.UserService;
 import com.ManchesterInside.ManchesterInside.entities.Post;
 import com.ManchesterInside.ManchesterInside.services.PostService;
+import com.ManchesterInside.ManchesterInside.entities.Course;
+import com.ManchesterInside.ManchesterInside.services.CourseService;
+import com.ManchesterInside.ManchesterInside.services.SchoolService;
+
+
+
 @Configuration
 @Profile("default")
 public class InitialDataLoader {
@@ -34,8 +41,14 @@ public class InitialDataLoader {
 	@Autowired
 	private PostService postService;
 	
-  @Autowired
+	@Autowired
 	private RoleService roleService;
+  	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private SchoolService schoolService;
 
 	
 	@Bean
@@ -102,6 +115,28 @@ public class InitialDataLoader {
 				post2.setTimeUploaded(LocalDateTime.now().plusDays(1));
 				post2.setUser(userService.findById(1).orElse(null));
 				postService.save(post2);
+			}
+			
+			if(courseService.count() > 0) {
+				log.info("Database is already populated with courses.");
+			}else {
+				School UOM = new School();
+				UOM.setName("UOM");
+				schoolService.save(UOM);
+				
+				Course course1 = new Course();
+				course1.setCourseName("COMP23311");
+				course1.setDescription("This is about software engineering 1 ");
+				course1.setTime(LocalDateTime.now());
+				course1.setSchool(UOM);
+				courseService.save(course1);
+				
+				Course course2 = new Course();
+				course2.setCourseName("COMP23412");
+				course2.setDescription("This is about software engineering 2 ");
+				course2.setTime(LocalDateTime.now());
+				course2.setSchool(UOM);
+				courseService.save(course2);
 			}
 			
 		};

@@ -30,6 +30,8 @@ public class CourseComment {
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime lastEdited;
 	
+	private Float ratings = 0.0f;
+	
 	@NotEmpty
 	private String comment;
 	
@@ -85,5 +87,12 @@ public class CourseComment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Float getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Float ratings) {
+		this.ratings = ratings;
 	}
 }
