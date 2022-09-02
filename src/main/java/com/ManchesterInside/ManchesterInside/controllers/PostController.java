@@ -79,6 +79,44 @@ public class PostController {
 		
 	}
 	
+	// For adding new event
+	@GetMapping("/update/{id}")
+	public String updateEvent(@PathVariable("id") long id, Model model) {
+		// if model doesn't have post, initialize a new post
+		if (!model.containsAttribute("post")) {
+			model.addAttribute("post", new Post());
+		}
+		// load post by id
+		Post post = postService.findById(id).orElseThrow(() -> new PostNotFoundException(id));
+		model.addAttribute("post", post);
+		
+		// TODO: Implement categories
+		
+		return "posts/update";
+	}
+	
+	// UPDATE NEW EVENT VIA FORM
+	@PostMapping(value = "/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String udpateEvent(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
+			Model model, RedirectAttributes redirectAttrs) {
+
+		if (errors.hasErrors()) {
+			model.addAttribute("post", post);
+			return "/posts/update";
+		}
+		// set author info and time info here
+		// no need to change author - should never happen
+		
+		// update edited time
+		post.setLastEdited(LocalDateTime.now());
+		
+		// save post after automatically adding relevant meta info
+		postService.save(post);
+		redirectAttrs.addFlashAttribute("ok_message", "New post added.");
+
+		return "redirect:/posts";
+	}
+	
 	/* add new post via contents of form (form should pass Post object) */
 	@PostMapping(value = "/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String createPost(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
