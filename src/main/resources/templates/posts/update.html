@@ -10,8 +10,10 @@
     
     <form action="#" th:action="@{/posts/update}" th:object="${post}" method="post">
       <div class="form-group">
-     	<!-- Hidden form that stores id -->
+     	<!-- Hidden form that stores id, author and uploadtime -->
       	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
+      	<input class="form-control" type="hidden" id="user" th:field="*{user}" autofocus="autofocus" />
+      	<input class="form-control" type="hidden" id="timeUploaded" th:field="*{timeUploaded}" autofocus="autofocus" />
       	
         <label for="title">Title</label>
         <input class="form-control" type="text" id="title" th:field="*{title}" placeholder="Enter post title" autofocus="autofocus" />
@@ -24,7 +26,7 @@
       </div>
       
       <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
-      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      <a class="btn btn-warning" role="button" href="/posts"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
     </form>
   </div>
 </body>

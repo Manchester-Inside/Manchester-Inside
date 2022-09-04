@@ -26,6 +26,7 @@
 		<!-- Update form button -->
 		<form th:action="@{/posts/update/{num}(num=${post.id})}" th:method="get">
              <button type="submit" class="btn btn-info"> Update</button>
+        </form>
         <hr>
 
 		<h3>Comments</h3>
@@ -46,18 +47,17 @@
 			</tbody>
 		</table>
 		
-		<!--
-		<form action="#" th:action="@{/posts/newcomment}" th:object="${postcomment}" method="post">
+		<form action="#" th:action="@{/posts/{id}/newcomment(id=${post.id})}" th:object="${pcomment}" method="post">
       	<div class="form-group">
+      	<!-- Hidden form that stores id -->
+      	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
 	        <label for="name">Add Comment:</label>
 	        <textarea class="form-control" type="text" id="comment" th:field="*{comment}" rows="2" placeholder="Enter comment..." autofocus="autofocus" />
-	        <p class="text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{description}">errors</p>
+	        <p class="text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">errors</p>
       	</div>
       
       	<button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
-      	<a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
     	</form>
-		-->
 		    
 		<a class="btn btn-primary" role="button" href="/posts"><i class="fas fa-home" aria-hidden="true"></i> Back to list</a>
 	</div>  

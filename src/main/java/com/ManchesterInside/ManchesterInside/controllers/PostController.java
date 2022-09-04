@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetails;
 import com.ManchesterInside.ManchesterInside.entities.Post;
+import com.ManchesterInside.ManchesterInside.entities.PostComment;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.exceptions.PostNotFoundException;
 import com.ManchesterInside.ManchesterInside.services.PostService;
@@ -59,8 +60,10 @@ public class PostController {
 			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
 
 		Post post = postService.findById(id).orElseThrow(() -> new PostNotFoundException(id));
-
+		PostComment comment = new PostComment();
+		
 		model.addAttribute("post", post);
+		model.addAttribute("pcomment", comment);
 		
 		return "posts/view";
 	}
@@ -97,16 +100,13 @@ public class PostController {
 	
 	// UPDATE NEW EVENT VIA FORM
 	@PostMapping(value = "/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String udpateEvent(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
+	public String updatePost(@RequestBody @Valid @ModelAttribute Post post, BindingResult errors,
 			Model model, RedirectAttributes redirectAttrs) {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("post", post);
 			return "/posts/update";
 		}
-		// set author info and time info here
-		// no need to change author - should never happen
-		
 		// update edited time
 		post.setLastEdited(LocalDateTime.now());
 		

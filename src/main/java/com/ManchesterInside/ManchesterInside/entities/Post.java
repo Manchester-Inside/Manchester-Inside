@@ -47,7 +47,7 @@ public class Post {
 	
 	private int downvotes = 0;
 	
-	@OneToMany
+	@OneToMany(mappedBy="post")
 	private List<PostComment> postComments;
 
 	public long getId() {
@@ -126,7 +126,13 @@ public class Post {
 		return postComments;
 	}
 	
+	/*
 	public void setPostComments(List<PostComment> postComments) {
 		this.postComments = postComments;
+	}
+	*/
+	
+	public void addPostComment(PostComment comment) {
+		this.postComments.add(comment);
 	}
 }

@@ -13,6 +13,4 @@ public interface PostService {
 	public Optional<Post> findById(long id);
 	
 	public Post save(Post post);
-	
-	public void updatePost(Post post, long id);
 }
