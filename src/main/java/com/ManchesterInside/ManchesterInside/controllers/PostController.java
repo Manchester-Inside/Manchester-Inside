@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -145,4 +146,12 @@ public class PostController {
 
 		return "redirect:/posts";
 	}	
+	
+	//delete one greeting
+	@DeleteMapping("/{id}")
+	public String deletePost(@PathVariable("id") long id, RedirectAttributes redirectAttrs) {
+		postService.deleteById(id);
+		redirectAttrs.addFlashAttribute("ok_message", "Post deleted.");
+		return "redirect:/posts";
+	}
 }

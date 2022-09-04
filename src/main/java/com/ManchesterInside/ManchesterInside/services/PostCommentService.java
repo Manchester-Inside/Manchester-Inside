@@ -13,4 +13,8 @@ public interface PostCommentService {
 	public Optional<PostComment> findById(long id);
 	
 	public PostComment save(PostComment comment);
+	
+	public void deleteById(long id);
+	
+	public void deleteAll();
 }

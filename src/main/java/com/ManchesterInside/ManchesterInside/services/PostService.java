@@ -13,4 +13,8 @@ public interface PostService {
 	public Optional<Post> findById(long id);
 	
 	public Post save(Post post);
+	
+	public void deleteById(long id);
+	
+	public void deleteAll();
 }

@@ -27,6 +27,10 @@
 		<form th:action="@{/posts/update/{num}(num=${post.id})}" th:method="get">
              <button type="submit" class="btn btn-info"> Update</button>
         </form>
+        <!-- Delete post button -->
+        <form th:action="@{/posts/{num}(num=${post.id})}" th:method="delete">
+      		<button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete event</button>
+   		</form>
         <hr>
 
 		<h3>Comments</h3>
@@ -36,6 +40,7 @@
 				<th>Author</th>
 				<th>UploadTime</th>
 				<th>Content</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,11 +48,14 @@
 				<td th:text="${{c.user.userName}}">Comment author here</td>
 				<td th:text="${{c.timeUploaded}}">12.25</td>
 				<td th:text="${{c.comment}}">Comment content here</td>
+				<td><form th:action="@{/comments/{num}(num=${c.id})}" th:method="delete">
+      				<button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete event</button>
+   				</form></td>
 			</tr>
 			</tbody>
 		</table>
 		
-		<form action="#" th:action="@{/posts/{id}/newcomment(id=${post.id})}" th:object="${pcomment}" method="post">
+		<form action="#" th:action="@{/comments/{id}(id=${post.id})}" th:object="${pcomment}" method="post">
       	<div class="form-group">
       	<!-- Hidden form that stores id -->
       	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />

@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetails;
@@ -31,7 +30,7 @@ import com.ManchesterInside.ManchesterInside.services.PostCommentService;
 import com.ManchesterInside.ManchesterInside.services.PostService;
 
 @Controller
-@RequestMapping(value = "/posts", produces = MediaType.TEXT_HTML_VALUE)
+@RequestMapping(value = "/comments", produces = MediaType.TEXT_HTML_VALUE)
 public class PostCommentController {
 	
 	@Autowired
@@ -40,22 +39,8 @@ public class PostCommentController {
 	@Autowired
 	private PostCommentService postCommentService;
 	
-	/*
-	// create new postComment object in model - required for form to function
-	@GetMapping("/{id}")
-	public String set(@PathVariable("id") long id,
-			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
-
-		PostComment pcomment = new PostComment();
-		
-		model.addAttribute("pcomment", pcomment);
-		
-		return "posts/view";
-	}
-	*/
-	
 	/* add new comment via contents of form (form should pass pcomment object) */
-	@PostMapping(value = "/{id}/newcomment", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String addComment(@RequestBody @Valid @ModelAttribute PostComment pcomment, BindingResult errors,
 			@PathVariable("id") long id, Model model, RedirectAttributes redirectAttrs) {
 
@@ -88,5 +73,13 @@ public class PostCommentController {
 
 		// return to original url upon saving
 		return "redirect:/posts/"+id;
-	}	
+	}
+	
+	//delete one comment
+	@DeleteMapping("/{id}")
+	public String deleteComment(@PathVariable("id") long id, RedirectAttributes redirectAttrs) {
+		postCommentService.deleteById(id);
+		redirectAttrs.addFlashAttribute("ok_message", "Comment deleted.");
+		return "redirect:/posts";
+	}
 }
