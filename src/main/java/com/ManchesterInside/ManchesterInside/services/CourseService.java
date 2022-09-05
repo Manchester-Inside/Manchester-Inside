@@ -14,5 +14,20 @@ public interface CourseService {
 	
 	public Course save(Course Course);
 	
+	public boolean existsById(long id);
+	
 	public void updateCourse(Course Course, long id);
+	
+	public void delete(Course Course);
+
+	public void deleteById(long id);
+	
+	public void deleteAll();
+
+	public void deleteAll(Iterable<Course> Courses);
+
+	public void deleteAllById(Iterable<Long> ids);
+
+
+	
 }

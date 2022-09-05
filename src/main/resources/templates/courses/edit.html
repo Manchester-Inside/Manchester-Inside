@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Edit</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Update course detail</h1>
+    <form action="#" th:action="@{/courses/edit}" th:object="${e}" method="post">
+      <div class="form-group">
+        <label for="courseName">Course name</label>
+        <input class="form-control" type="text" name="courseName" id="courseName" th:value="${courseName}" />
+      </div>    
+      
+      <div class="form-group">
+        <label for="time">Course Description</label>
+        <input class="form-control" type="text" name="description" id="Description" th:value="${description}"/>
+      </div>
+      
+       <div class="form-group">
+        <label style="margin-top: 10px" for="school">School:</label>
+        <select class="form-control"  id="school" name="school">
+          <option th:each="school : ${school}" th:value="${school.id}" th:text="${{school.name}}"
+            th:selected="(${school.id} == ${{course.school.id}})" >School Name
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+      	<label style="margin-top: 10px"></label>
+        <input class="form-control" type="hidden" name="id" id="id" th:value="${id}"/>
+      </div>
+  
+      <button class="btn btn-primary" type="submit" th:method="edit"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/courses"><i class="fa fa-ban" aria-hidden="true"></i> Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

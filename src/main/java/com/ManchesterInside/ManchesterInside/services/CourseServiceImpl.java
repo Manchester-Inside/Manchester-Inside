@@ -23,6 +23,11 @@ public class CourseServiceImpl implements CourseService {
 	public Iterable<Course> findAll() {
 		return CourseRepository.findAll();
 	}
+	
+	@Override
+	public boolean existsById(long id) {
+		return CourseRepository.existsById(id);
+	}
 
 	@Override
 	public Optional<Course> findById(long id) {
@@ -40,8 +45,33 @@ public class CourseServiceImpl implements CourseService {
 		//postInDB.setFirstName(user.getFirstName());
 		// set stuff here
 		CourseRepository.save(courseInDB);
-		
 	}
+	
+	@Override
+	public void delete(Course Course) {
+		CourseRepository.delete(Course);
+	}
+
+	@Override
+	public void deleteById(long id) {
+		CourseRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteAll() {
+		CourseRepository.deleteAll();
+	}
+
+	@Override
+	public void deleteAll(Iterable<Course> Courses) {
+		CourseRepository.deleteAll(Courses);
+	}
+
+	@Override
+	public void deleteAllById(Iterable<Long> ids) {
+		CourseRepository.deleteAllById(ids);
+	}
+	
 
 
 }

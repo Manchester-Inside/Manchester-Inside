@@ -1,6 +1,7 @@
 package com.ManchesterInside.ManchesterInside.controllers;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -111,6 +114,54 @@ public class CourseController {
 
 		return "redirect:/courses";
 	}	
+	
+	@DeleteMapping("/{id}")
+	public String deleteCourse(@PathVariable("id") long id, RedirectAttributes redirectAttrs) {
+		if (!courseService.existsById(id)) {
+			throw new CourseNotFoundException(id);
+		}
+
+		courseService.deleteById(id);
+		redirectAttrs.addFlashAttribute("ok_message", "course deleted.");
+
+		return "redirect:/courses";
+	}
+	
+	@DeleteMapping
+	public String deleteAllcourses(RedirectAttributes redirectAttrs) {
+		courseService.deleteAll();
+		redirectAttrs.addFlashAttribute("ok_message", "All courses deleted.");
+
+		return "redirect:/courses";
+	}
+	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editEvent(@PathVariable("id") long id, Model model) {
+		
+		Optional<Course> course = courseService.findById(id);
+		model.addAttribute("course", course);
+		model.addAttribute("school", schoolService.findAll());
+
+		return "courses/edit";
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String updateEvent(@RequestBody @Valid @ModelAttribute Course course,
+			BindingResult errors, Model model, RedirectAttributes redirectAttrs, String name, String time, String date, String venue) {
+		
+		if (errors.hasErrors()) {
+			model.addAttribute("course", course);
+			model.addAttribute("school", schoolService.findAll());
+			return "/courses/new";
+		}
+		courseService.save(course);
+		redirectAttrs.addFlashAttribute("ok_message", "course updated.");
+
+		return "redirect:/courses";
+
+	}
+
+
 	
 	
 }

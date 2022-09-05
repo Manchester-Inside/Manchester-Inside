@@ -15,6 +15,7 @@
           <th><i class="fas fa-map-marker-alt"></i> School </th>
           <th><i class="fas fa-clock"></i> Time Uploaded</th>
           <th><i class="fas fa-bolt"></i> Description</th>
+          <th></th>
         </tr>
       
       </thead>
@@ -27,12 +28,19 @@
           <td th:text="${{course.time}}">Time Uploaded</td>
           <td th:text="${{course.description}}">course description</td>
           <td>
+          <form th:action="@{/courses/{num}(num=${course.id})}" th:method="delete">
+    	     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash" aria-hidden="true"></i>Delete</button>
+    	  </form>
     	  </td>
+    	  <td>
+          	<a th:href="@{'/courses/edit/' + ${course.id}}" ><button type="button" class="btn btn-success">Edit</button></a>
+          </td>
         </tr>
       	
       </tbody>
     </table>
-
+	<a class="btn btn-primary" role="button" th:href="@{/courses}"><i class="fas fa-arrow-left" aria-hidden="true"></i>Back</a>
+	
   </div>
 </body>
 </html>
