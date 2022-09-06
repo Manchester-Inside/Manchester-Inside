@@ -38,7 +38,7 @@ public class CourseComment {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Course course;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	private User user;
 
 	public long getId() {

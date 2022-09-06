@@ -124,6 +124,10 @@ public class InitialDataLoader {
 				UOM.setName("UOM");
 				schoolService.save(UOM);
 				
+				School MMU = new School();
+				MMU.setName("MMU");
+				schoolService.save(MMU);
+				
 				Course course1 = new Course();
 				course1.setCourseName("COMP23311");
 				course1.setDescription("This is about software engineering 1 ");
@@ -135,7 +139,7 @@ public class InitialDataLoader {
 				course2.setCourseName("COMP23412");
 				course2.setDescription("This is about software engineering 2 ");
 				course2.setTime(LocalDateTime.now());
-				course2.setSchool(UOM);
+				course2.setSchool(MMU);
 				courseService.save(course2);
 			}
 			

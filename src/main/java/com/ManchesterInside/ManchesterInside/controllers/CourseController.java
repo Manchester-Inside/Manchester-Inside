@@ -29,6 +29,7 @@ import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetail
 import com.ManchesterInside.ManchesterInside.entities.Course;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.exceptions.CourseNotFoundException;
+import com.ManchesterInside.ManchesterInside.services.CourseCommentService;
 import com.ManchesterInside.ManchesterInside.services.CourseService;
 import com.ManchesterInside.ManchesterInside.services.SchoolService;
 
@@ -43,6 +44,9 @@ public class CourseController {
 	@Autowired
 	private SchoolService schoolService;
 	
+	@Autowired
+	private CourseCommentService courseCommentService;
+	
 	//TODO: Add not_found error
 	@ExceptionHandler(CourseNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -54,7 +58,7 @@ public class CourseController {
 	
 	/* returns all posts as a list, under attribute "posts" of model */
 	@GetMapping
-	public String getPosts(Model model) {
+	public String getCourses(Model model) {
 
 		model.addAttribute("courses", courseService.findAll());
 
@@ -76,7 +80,7 @@ public class CourseController {
 	//TODO: Add /new, /update and /delete accordingly
 	// For adding new event
 	@GetMapping("/new")
-	public String newPost(Model model) {
+	public String newCourse(Model model) {
 		// if model doesn't have course, initialize a new course
 		if (!model.containsAttribute("course")) {
 			model.addAttribute("course", new Course());
@@ -158,8 +162,8 @@ public class CourseController {
 		redirectAttrs.addFlashAttribute("ok_message", "course updated.");
 
 		return "redirect:/courses";
-
 	}
+	
 
 
 	
