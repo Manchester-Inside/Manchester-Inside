@@ -3,6 +3,7 @@ package com.ManchesterInside.ManchesterInside.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,6 +29,9 @@ public class Course {
 	
 	private String courseName;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private User user;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime time;
 	
@@ -38,6 +42,9 @@ public class Course {
 	@ManyToOne
 	private School school;
 	
+	@OneToMany(mappedBy="course", cascade = CascadeType.REMOVE, orphanRemoval = false)
+	private List<CourseComment> courseComments;
+	
 
 	public long getId() {
 		return id;
@@ -45,6 +52,14 @@ public class Course {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getCourseName() {
@@ -77,5 +92,14 @@ public class Course {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+	
+	public List<CourseComment> getCourseComments(){
+		return courseComments;
+	}
+	
+	
+	public void addCourseComment(CourseComment comment) {
+		this.courseComments.add(comment);
 	}
 }

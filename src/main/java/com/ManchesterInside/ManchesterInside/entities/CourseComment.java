@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
@@ -36,6 +37,7 @@ public class CourseComment {
 	private String comment;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="course_id", nullable=false)
 	private Course course;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

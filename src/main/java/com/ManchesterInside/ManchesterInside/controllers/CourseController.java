@@ -1,6 +1,7 @@
 package com.ManchesterInside.ManchesterInside.controllers;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ManchesterInside.ManchesterInside.config.userdetails.CustomUserDetails;
 import com.ManchesterInside.ManchesterInside.entities.Course;
+import com.ManchesterInside.ManchesterInside.entities.CourseComment;
 import com.ManchesterInside.ManchesterInside.entities.User;
 import com.ManchesterInside.ManchesterInside.exceptions.CourseNotFoundException;
 import com.ManchesterInside.ManchesterInside.services.CourseCommentService;
@@ -71,8 +73,10 @@ public class CourseController {
 			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
 
 		Course course = courseService.findById(id).orElseThrow(() -> new CourseNotFoundException(id));
+		CourseComment comment = new CourseComment();
 
 		model.addAttribute("course", course);
+		model.addAttribute("ccomment", comment);
 
 		return "courses/viewcourse";
 	}
@@ -113,6 +117,8 @@ public class CourseController {
 
 		
 		// save post after automatically adding relevant meta info
+		course.setTime(LocalDateTime.now());
+		course.setUser(user);
 		courseService.save(course);
 		redirectAttrs.addFlashAttribute("ok_message", "New course added.");
 
@@ -140,7 +146,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editEvent(@PathVariable("id") long id, Model model) {
+	public String editCourse(@PathVariable("id") long id, Model model) {
 		
 		Optional<Course> course = courseService.findById(id);
 		model.addAttribute("course", course);
@@ -150,14 +156,20 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String updateEvent(@RequestBody @Valid @ModelAttribute Course course,
-			BindingResult errors, Model model, RedirectAttributes redirectAttrs, String name, String time, String date, String venue) {
+	public String updateCourse(@RequestBody @Valid @ModelAttribute Course course,
+			BindingResult errors, Model model, RedirectAttributes redirectAttrs, String name, String time, String date) {
 		
 		if (errors.hasErrors()) {
 			model.addAttribute("course", course);
 			model.addAttribute("school", schoolService.findAll());
-			return "/courses/new";
+			return "/courses/edit";
 		}
+		
+		List<CourseComment> CourseComment = course.getCourseComments();
+		if(CourseComment != null) {
+			courseCommentService.deleteAll(CourseComment);
+		}
+		course.setTime(LocalDateTime.now());
 		courseService.save(course);
 		redirectAttrs.addFlashAttribute("ok_message", "course updated.");
 
