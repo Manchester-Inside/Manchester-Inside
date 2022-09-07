@@ -25,11 +25,11 @@
 		
 		<!-- Update form button -->
 		<form th:action="@{/posts/update/{num}(num=${post.id})}" th:method="get">
-             <button type="submit" class="btn btn-info"> Update</button>
+             <button type="submit" class="btn btn-info mb-2"> Update</button>
         </form>
         <!-- Delete post button -->
         <form th:action="@{/posts/{num}(num=${post.id})}" th:method="delete">
-      		<button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete event</button>
+      		<button type="submit" class="btn btn-danger mb-2"><i class="fas fa-trash" aria-hidden="true"></i> Delete event</button>
    		</form>
         <hr>
 
@@ -60,14 +60,14 @@
       	<!-- Hidden form that stores id -->
       	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
 	        <label for="name">Add Comment:</label>
-	        <textarea class="form-control" type="text" id="comment" th:field="*{comment}" rows="2" placeholder="Enter comment..." autofocus="autofocus" />
+	        <textarea class="form-control my-3" type="text" id="comment" th:field="*{comment}" rows="2" placeholder="Enter comment..." autofocus="autofocus" />
 	        <p class="text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">errors</p>
       	</div>
       
-      	<button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      	<button class="btn btn-primary mb-2" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
     	</form>
 		    
-		<a class="btn btn-primary" role="button" href="/posts"><i class="fas fa-home" aria-hidden="true"></i> Back to list</a>
+		<a class="btn btn-primary mb-2" role="button" href="/posts"><i class="fas fa-home" aria-hidden="true"></i> Back to list</a>
 	</div>  
 </body>
 </html>
