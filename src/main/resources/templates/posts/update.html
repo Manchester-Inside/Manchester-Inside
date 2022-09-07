@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Update Post</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Update an existing post</h1>
+    
+    <form action="#" th:action="@{/posts/update}" th:object="${post}" method="post">
+      <div class="form-group">
+     	<!-- Hidden form that stores id, author and uploadtime -->
+      	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
+      	<input class="form-control" type="hidden" id="user" th:field="*{user}" autofocus="autofocus" />
+      	<input class="form-control" type="hidden" id="timeUploaded" th:field="*{timeUploaded}" autofocus="autofocus" />
+     </div>
+      	<div class="form-group mb-3 px-1">
+        	<label for="title">Title</label>
+        	<input class="form-control mt-2" type="text" id="title" th:field="*{title}" placeholder="Enter post title" autofocus="autofocus" />
+        	<p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{name}">errors</p>
+      	</div>
+      <div class="form-group mb-3">
+        <label for="name">Post content</label>
+        <textarea class="form-control mt-2" type="text" id="content" th:field="*{content}" rows="5" placeholder="Enter post content" autofocus="autofocus" />
+        <p class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">errors</p>
+      </div>
+      
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/posts"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

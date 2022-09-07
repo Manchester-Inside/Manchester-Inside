@@ -9,22 +9,22 @@
     <h1>Add a new Post</h1>
     
     <form action="#" th:action="@{/posts/new}" th:object="${post}" method="post">
-      <div class="form-group">
+      <div class="form-group mb-3">
      	<!-- Hidden form that stores id -->
       	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
       	
-        <label for="title">Title</label>
+        <label for="title" class="mb-2">Title</label>
         <input class="form-control" type="text" id="title" th:field="*{title}" placeholder="Enter post title" autofocus="autofocus" />
         <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{name}">errors</p>
       </div>
-      <div class="form-group">
-        <label for="name">Post content</label>
-        <textarea class="form-control" type="text" id="content" th:field="*{content}" rows="5" placeholder="Enter post content" autofocus="autofocus" />
+      <div class="form-group mb-3">
+        <label for="name" class="mb-2">Post content</label>
+        <textarea class="form-control mb-3" type="text" id="content" th:field="*{content}" rows="5" placeholder="Enter post content" autofocus="autofocus" />
         <p class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">errors</p>
       </div>
       
       <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
-      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      <a class="btn btn-warning" role="button" href="/posts"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
     </form>
   </div>
 </body>

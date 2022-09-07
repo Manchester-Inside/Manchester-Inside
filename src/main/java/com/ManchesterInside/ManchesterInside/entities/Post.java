@@ -3,6 +3,7 @@ package com.ManchesterInside.ManchesterInside.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class Post {
 	
 	private int downvotes = 0;
 	
-	@OneToMany
+	@OneToMany(mappedBy="post", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<PostComment> postComments;
 
 	public long getId() {
@@ -120,5 +121,19 @@ public class Post {
 
 	public void setDownvotes(int downvotes) {
 		this.downvotes = downvotes;
+	}
+	
+	public List<PostComment> getPostComments(){
+		return postComments;
+	}
+	
+	/*
+	public void setPostComments(List<PostComment> postComments) {
+		this.postComments = postComments;
+	}
+	*/
+	
+	public void addPostComment(PostComment comment) {
+		this.postComments.add(comment);
 	}
 }

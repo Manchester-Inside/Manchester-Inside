@@ -33,13 +33,14 @@ public class PostServiceImpl implements PostService {
 	public Post save(Post post) {
 		return postRepository.save(post);
 	}
-
+	
 	@Override
-	public void updatePost(Post post, long id) {
-		Post postInDB = postRepository.findById(id).get();
-		//postInDB.setFirstName(user.getFirstName());
-		// set stuff here
-		postRepository.save(postInDB);
+	public void deleteById(long id) {
+		postRepository.deleteById(id);
 	}
-
+	
+	@Override
+	public void deleteAll() {
+		postRepository.deleteAll();
+	}
 }

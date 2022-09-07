@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.FetchType;
 
@@ -32,6 +32,7 @@ public class PostComment {
 	private String comment;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="post_id", nullable=false)
 	private Post post;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -75,5 +76,13 @@ public class PostComment {
 
 	public void setPost(Post post) {
 		this.post = post;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 }
