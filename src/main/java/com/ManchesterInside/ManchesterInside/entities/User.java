@@ -55,6 +55,9 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = false)
 	private List<Post> posts;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = false)
+	private List<Course> courses;
 
 	public long getId() {
 		return id;
@@ -126,5 +129,12 @@ public class User {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 }

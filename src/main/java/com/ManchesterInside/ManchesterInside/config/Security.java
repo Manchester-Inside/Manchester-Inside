@@ -46,8 +46,6 @@ public class Security extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-//	public static final String ADMIN_ROLE = "ADMINISTRATOR";
-
 	// List the mappings/methods for which no authorisation is required.
 	private static final RequestMatcher[] NO_AUTH = { new AntPathRequestMatcher("/webjars/**", "GET"),
 			new AntPathRequestMatcher("/api/**", "GET"),

@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 		userInDB.setEmail(user.getEmail());
 		userInDB.setPosts(user.getPosts());
 		userInDB.setEnabled(user.isEnabled());
+		userInDB.setCourses(user.getCourses());
 //		userInDB.setRoles(user.getRoles());
 		userRepository.save(userInDB);
 	}

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>New Review</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Add a new course review</h1>
+    
+    <form action="#" th:action="@{/courses/new}" th:object="${course}" method="post">
+      <div class="form-group">
+     	<!-- Hidden form that stores id -->
+      	<input class="form-control" type="hidden" id="id" th:field="*{id}" autofocus="autofocus" />
+      	
+        <label for="title">Course Name</label>
+        <input class="form-control" type="text" id="courseName" th:field="*{courseName}" placeholder="Enter Course Name" autofocus="autofocus" />
+        <p class="text-danger" th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}">errors</p>
+      </div>
+      <div class="form-group">
+        <label for="name">review description</label>
+        <textarea class="form-control" type="text" id="description" th:field="*{description}" rows="5" placeholder="Enter review desciption " autofocus="autofocus" />
+        <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">errors</p>
+      </div>
+      
+      <div class="form-group blu-margin">
+    <select class="form-control" th:field="*{school}"  id="school">
+    <option value="0">select school</option>
+    <option th:each="school : ${school}" th:value="${school.id}" th:text="${{school.name}}"></option>
+    </select>
+	</div>
+      
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/courses"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

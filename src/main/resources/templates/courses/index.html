@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Course Review</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>All Courses</h1>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>description</th>
+          <th>UploadTime</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="c : ${courses}">
+          <td>
+            <a th:href="@{'/courses/' + ${c.id}}" th:text="${c.courseName}">Course Title</a>
+          </td>
+          <td th:text="${{c.description}}">description</td>
+          <td th:text="${{c.time}}">12.25</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <a class="btn btn-primary" role="button" href="/courses/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a new reviews</a>
+    </p>
+  </div>
+</body>
+</html>

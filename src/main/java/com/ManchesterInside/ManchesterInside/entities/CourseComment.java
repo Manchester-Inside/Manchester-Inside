@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
@@ -30,13 +31,16 @@ public class CourseComment {
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime lastEdited;
 	
+	private Float ratings = 0.0f;
+	
 	@NotEmpty
 	private String comment;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="course_id", nullable=false)
 	private Course course;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	private User user;
 
 	public long getId() {
@@ -85,5 +89,12 @@ public class CourseComment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Float getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Float ratings) {
+		this.ratings = ratings;
 	}
 }

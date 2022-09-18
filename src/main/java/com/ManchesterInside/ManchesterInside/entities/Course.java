@@ -1,13 +1,17 @@
 package com.ManchesterInside.ManchesterInside.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -25,17 +29,22 @@ public class Course {
 	
 	private String courseName;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private User user;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private LocalDateTime time;
 	
 	@NotEmpty
 	private String description;
 	
-	private Float ratings = 0.0f;
-	
 	@NotNull
 	@ManyToOne
 	private School school;
+	
+	@OneToMany(mappedBy="course", cascade = CascadeType.REMOVE, orphanRemoval = false)
+	private List<CourseComment> courseComments;
+	
 
 	public long getId() {
 		return id;
@@ -43,6 +52,14 @@ public class Course {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getCourseName() {
@@ -69,19 +86,20 @@ public class Course {
 		this.description = description;
 	}
 
-	public Float getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Float ratings) {
-		this.ratings = ratings;
-	}
-
 	public School getSchool() {
 		return school;
 	}
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+	
+	public List<CourseComment> getCourseComments(){
+		return courseComments;
+	}
+	
+	
+	public void addCourseComment(CourseComment comment) {
+		this.courseComments.add(comment);
 	}
 }
